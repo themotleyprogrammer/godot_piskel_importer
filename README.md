@@ -16,5 +16,5 @@ Download the repository, extract to the root of your project and enable the plug
 ## HACK by themotleyprogrammer
 
 Added `if layer['opacity'] != 0:`  to line 77 in `addons/godot_piskel_importer/piskel_importer.gd`
-This is a quick hack allowing one to toggle the visibility of layers in piskel. All layers with an opacity of 0 will be ignored.
+This is a quick hack allowing one to toggle the visibility of layers in piskel. All layers with an opacity of 0 will be not be drawn.
 Makes adding different sprite layers (like clothing) to a base sprite easier. There may 'technically' be a more efficient way of doing this, but there shouldn't be any trouble.
