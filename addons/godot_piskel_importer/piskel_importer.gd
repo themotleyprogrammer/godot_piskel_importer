@@ -65,30 +65,37 @@ func import(source_file, save_path, options, r_platform_variants, r_gen_files):
 
 		# Parse it
 		layer = JSON.parse(layer)
-
+		
+		
+		
 		if layer.error != OK:
 			return layer.error
-
+		
 		layer = layer.result
+		
+		#THIS IS THE HACK FOR SKIPPING LAYERS WITH 0 OPACITY
+		if layer['opacity'] != 0:
 
-		# Get the base64 encoded image. It's always PNG (atleast in version 2 of the file)
-		var dataURI = layer.chunks[0].base64PNG.split(",")
-		var b64png = dataURI[dataURI.size() - 1]
+			
+			
+			# Get the base64 encoded image. It's always PNG (atleast in version 2 of the file)
+			var dataURI = layer.chunks[0].base64PNG.split(",")
+			var b64png = dataURI[dataURI.size() - 1]
 
-		# Decode the PNG
-		var png = Marshalls.base64_to_raw(b64png)
+			# Decode the PNG
+			var png = Marshalls.base64_to_raw(b64png)
 
-		# Parse the PNG from the buffer
-		var img = Image.new()
-		err = img.load_png_from_buffer(png)
+			# Parse the PNG from the buffer
+			var img = Image.new()
+			err = img.load_png_from_buffer(png)
 
-		if err:
-			return err
+			if err:
+				return err
 
-		if final_image == null:
-			final_image = img
-		else:
-			final_image.blend_rect(img, Rect2(0, 0, img.get_width(), img.get_height()), Vector2.ZERO)
+			if final_image == null:
+				final_image = img
+			else:
+				final_image.blend_rect(img, Rect2(0, 0, img.get_width(), img.get_height()), Vector2.ZERO)
 
 	return save_stex(final_image, save_path)
 
